@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>금융 및 기술 용어 사전</title>
+    <!-- Tailwind CSS 로드 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter 폰트 로드 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Noto Sans KR 폰트를 기본으로, Inter 폰트를 영문/숫자에 적용 */
+        body {
+            font-family: 'Noto Sans KR', 'Inter', sans-serif;
+            /* 고정된 헤더(16단위 = 4rem)만큼 본문 상단에 패딩을 추가하여 콘텐츠가 가려지는 것을 방지 */
+            padding-top: 4rem; 
+        }
+        /* 검색 결과 없음 메시지 초기 숨김 */
+        #no-results {
+            display: none;
+        }
+        
+        /* JS에서 카테고리 섹션을 숨길 때 !important를 피하기 위해 */
+        .category-section {
+            display: none; /* JS로 제어하기 전에 기본적으로 숨김 */
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen antialiased">
+
+    <!-- ==== [새로 추가된] 고정 상단 헤더 (Home 링크 포함) ==== -->
+    <div class="fixed top-0 left-0 w-full bg-gray-800/90 backdrop-blur-sm shadow-xl z-50 h-16 flex items-center border-b border-gray-700">
+        <div class="max-w-4xl w-full mx-auto px-6 md:px-10">
+            <!-- 홈 링크 -->
+            <a href="index.html" class="text-xl font-bold text-blue-400 hover:text-blue-300 transition-colors duration-200 flex items-center">
+                <!-- 홈 아이콘 (SVG) -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block align-middle" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="ml-2 hidden sm:inline">홈 (Home)</span>
+            </a>
+        </div>
+    </div>
+    <!-- ====================================================== -->
+
+    <!-- 메인 컨테이너 -->
+    <div class="max-w-4xl mx-auto p-6 md:p-10">
+
+        <!-- 헤더 (기존 제목) -->
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+                금융 & 기술 핵심 용어 사전
+            </h1>
+        </header>
+
+        <!-- 검색창 -->
+        <div class="mb-8">
+            <input
+                type="search"
+                id="search-box"
+                placeholder="용어 또는 설명 검색..."
+                class="w-full p-4 rounded-lg bg-gray-800 text-white border border-gray-700 
+                       focus:ring-2 focus:ring-blue-500 focus:outline-none 
+                       transition-all duration-300 ease-in-out
+                       shadow-lg placeholder-gray-500"
+            >
+        </div>
+        
+        <!-- 카테고리 선택 버튼 -->
+        <div id="category-buttons" class="flex flex-wrap gap-3 mb-10 justify-center">
+            <button data-target="#category-1" class="category-button px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200">
+                I. 금융 및 핀테크
+            </button>
+            <button data-target="#category-2" class="category-button px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200">
+                II. 4차 산업혁명
+            </button>
+            <button data-target="#category-3" class="category-button px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200">
+                III. 데이터 및 AI
+            </button>
+            <button data-target="#category-4" class="category-button px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200">
+                IV. 경영 및 사회적 책임
+            </button>
+            <button data-target="#category-5" class="category-button px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200">
+                V. 소비자 트렌드
+            </button>
+        </div>
+
+        <!-- 용어 목록 컨테이너 -->
+        <div id="glossary-container" class="space-y-16">
+
+            <!-- 카테고리 1: 금융 및 핀테크 -->
+            <section id="category-1" class="category-section">
+                <h2 class="text-3xl font-bold border-b-2 border-blue-500 pb-3 mb-8 text-blue-300">
+                    I. 금융 및 핀테크 용어
+                </h2>
+                <dl class="space-y-8">
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-blue-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">핀테크 (Fintech)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">금융(finance)과 기술(technology)의 융복합(convergence)을 의미하며, 기존 금융 서비스(간편결제, 송금, 자산관리 등)에 IT를 결합한 핀테크 1.0에서, 혁신 융합기술을 통해 새로운 비즈니스 모델을 구축하는 핀테크 2.0으로 발전했습니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-blue-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">테크핀 (Techfin)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">정보기술(IT)을 기반으로, 새로운 금융 서비스를 결합하는 개념이며, 중국 알리바바의 마윈 회장이 2016년에 처음 제시했습니다.</dd>
+                    </div>
+                    <!-- ... category 1의 나머지 term-pair ... -->
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-blue-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">인터넷 전문은행</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">정보통신기술(ICT)과 금융분야의 주요 이슈(2017년)로, K뱅크, 카카오뱅크가 대표적입니다. 비대면 인증 방식을 통해 소비자 편익을 증대시키며, 낮은 수수료나 대출 조건 완화 등의 차별화 전략을 사용합니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-blue-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">간편결제시스템</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">사용자들이 온라인 및 오프라인에서 신속하고 쉽게 결제할 수 있도록 지원하는 전자 결제 방식. 빠른 결제, 편리성, 암호화 기술을 통한 높은 보안성을 장점으로 합니다. (예: 카카오페이, 네이버페이, 삼성 페이 등).</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-blue-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">로보어드바이저 (Robo-Adviser)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">2008년 미국 월가(Wall Street)에서 처음 등장했으며, 빅데이터와 인공지능 알고리즘 기반으로 고객에게 온라인으로 자산배분 포트폴리오를 관리해주는 금융 자문 서비스입니다. 인간의 주관적 판단이나 개입 없이 시스템에 의존하여 투자하며, 상장지수펀드(ETF)를 활용한 분산투자로 중위험·중수익 투자를 추구합니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-blue-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">인슈어테크 (InsurTech)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">보험(Insurance)과 기술(Technology)의 합성어로, AI, 빅데이터, 블록체인, IoT 기술을 활용하여 보험 산업의 효율성과 고객 경험을 향상시키는 것을 목표로 합니다. 주요 분야는 언더라이팅, 청구 처리, 고객 서비스, 맞춤형 보험 상품 제공 등입니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-blue-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">P2P 금융 (Peer-to-Peer Financing)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">금융기관을 통하지 않고 인터넷이나 모바일 등으로 사적 개인 간에 직접적으로 금융거래가 이루어지도록 중개하는 금융플랫폼을 말합니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-blue-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">오픈뱅킹 (Open Banking)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">금융 데이터와 서비스를 안전하게 공유할 수 있도록 개방된 표준을 통해 금융 기관과 제3자 간의 협력을 촉진하는 시스템. API를 활용하여 금융의 투명성과 효율성을 높입니다.</dd>
+                    </div>
+                </dl>
+            </section>
+
+            <!-- 카테고리 2: 4차 산업혁명 -->
+            <section id="category-2" class="category-section">
+                <h2 class="text-3xl font-bold border-b-2 border-purple-500 pb-3 mb-8 text-purple-300">
+                    II. 4차 산업혁명 및 디지털 기술 용어
+                </h2>
+                <dl class="space-y-8">
+                    <!-- ... category 2의 term-pair ... -->
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-purple-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">4차 산업혁명 (4IR)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">빅데이터 기반 디지털 전환(DT), 가상세계와 현실세계의 융복합, CPS 초연결 사회 구현 등을 통해 새로운 가치를 창출하는 시대입니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-purple-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">디지털 전환 (DT, DX)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">디지털과 물리적 요소들의 통합을 통해 비즈니스 모델을 변화하고 새롭게 정립하는 과정. 아날로그 정보를 디지털 형식으로 변환하는 활동도 포함합니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-purple-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">디지로그 (Digilog)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">디지털 기술에 아날로그 감성을 결합한 형태로 제공되는 제품 및 서비스. 기술과 감성의 공존을 의미합니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-purple-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">CPS (Cyber Physical System)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">컴퓨팅과 물리세계가 융합되어 자동화, 지능화되는 초연결 사회 구현의 핵심 시스템. 현실세계와 디지털 사이버세계가 긴밀하게 결합된 시스템입니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-purple-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">DNA (4IR 키워드)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">Big Data, Network, AI의 압축어.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-purple-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">ABC (4IR 키워드)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">AI, Big data, Cloud computing의 압축어.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-purple-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">O2O (Online to Off-line)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">오프라인 상점에서 구경 후, 온라인으로 주문을 유도하는 마케팅 전략.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-purple-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">O4O (On-line for Off-line)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">온라인에 축적된 데이터를 활용하여 오프라인에서 새로운 비즈니스 모델로 적용하는 전략.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-purple-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">Web 3.0</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">공정, 자율을 지향하며, 탈중앙화(분산화) 방식을 특징으로 하는 차세대 웹. 지능화된 웹과 개인 맞춤화를 지향하며, 메타버스, 블록체인이 기반 기술입니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-purple-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">클라우드 컴퓨팅 (Cloud computing)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">인터넷상의 클라우드(ISP 네트워크)를 통해 IT 관련 서비스를 제공받는 컴퓨팅 환경. 컴퓨팅 자원을 필요한 만큼 빌려 쓰고 사용한 만큼 요금을 지불하는 방식.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-purple-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">IaaS (Infrastructure as a Service)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">서버, 스토리지 등 인프라 시스템 자원을 제공하는 클라우드 서비스 모델.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-purple-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">SaaS (Software as a Service)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">인터넷으로 소프트웨어 서비스를 제공하는 클라우드 서비스 모델.</dd>
+                    </div>
+                </dl>
+            </section>
+
+            <!-- 카테고리 3: 데이터 및 인공지능 -->
+            <section id="category-3" class="category-section">
+                <h2 class="text-3xl font-bold border-b-2 border-green-500 pb-3 mb-8 text-green-300">
+                    III. 데이터 및 인공지능 용어
+                </h2>
+                <dl class="space-y-8">
+                    <!-- ... category 3의 term-pair ... -->
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-green-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">데이터 (Data)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">의미 있는 단순한 사실들의 집합.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-green-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">정보 (Information)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">해석할 수 있는 의미와 가치를 가진 자료. 데이터(Data)의 진화 단계 중 하나로, 데이터 → 정보 → 지식 → 지혜 순으로 발전합니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-green-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">빅데이터 (Big Data)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">정형, 반정형, 비정형 데이터 모두를 포함하여, 일상적으로 비즈니스에 영향을 미치는 대용량 데이터를 지칭. 특징으로는 Volume, Velocity, Variety, Value, Variable 등이 있으며, 분석의 궁극적 목적은 가치 창출입니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-green-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">데이터웨어하우스 (DW)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">데이터의 추출, 변환, 통합, 요약된 데이터베이스 저장소.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-green-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">데이터 마트 (DM)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">소규모로 구축된 데이터웨어하우스.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-green-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">메타데이터 (Meta Data)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">데이터에 대한 정보를 담고 있는 데이터 (예: 파일의 위치, 크기, 소유자, 허가권 등).</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-green-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">마이데이터 (MyData)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">개인의 활동으로 생성된 데이터에 대한 활용 주권이 정보주체인 개인에게 있음을 강조하는 개념. 개인의 금융 정보(은행, 카드, 보험, 증권)를 통합 관리하여 맞춤형 상품 추천 및 재무 컨설팅을 지원하는 서비스입니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-green-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">인공지능 (AI, Artificial Intelligence)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">사람처럼 생각하고 행동하며 이성적으로 추론하는 알고리즘으로 주어진 문제를 해결합니다. 인간의 지적인 능력을 구현한 기술 분야입니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-green-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">머신러닝 (ML, Machine Learning)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">인간의 학습 능력과 같은 기능을 컴퓨터에 부여하기 위한 기술. 지도 학습, 비지도 학습, 강화 학습 방법이 있습니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-green-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">딥러닝 (DL, Deep Learning)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">머신러닝 방법 중 신경망 기법을 적용하여, 빅데이터를 기반으로 스스로 학습하며 판단하는 기술.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-green-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">생성형 AI (Generative AI)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">몇 가지 원리로 자연어 문장을 만들어 내는 능력을 갖춘 AI를 뜻합니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-green-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">ChatGPT</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">미국 Open AI에서 개발한 실시간 딥러닝 기반 대화형 인공지능 챗봇. 사용자와 주고 받는 대화에서 질문에 답하도록 설계된 자연어 처리 모델입니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-green-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">챗봇 (Chatbot)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">자연어 처리(NLP) 기술을 이용해 사람과 대화할 수 있는 소프트웨어 애플리케이션.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-green-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">디지털 트윈 (Digital Twin)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">컴퓨터에 현실 속 쌍둥이 모델을 만들어 미리 예측 기능을 수행하며 의사결정을 돕는 시스템의 가상 모델. 실제 대상의 변화를 반영하도록 실시간 업데이트됩니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-green-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">형식지 (Explicit knowledge)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">언어로 명시할 수 있는 객관적이고 형식적인 지식 (예: 데이터 정책, 문서 등).</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-green-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">암묵지 (tacit knowledge)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">개인적인 경험에 의해 얻어지는 말로 표현하기 어려운 지식.</dd>
+                    </div>
+                </dl>
+            </section>
+
+            <!-- 카테고리 4: 경영 및 사회적 책임 -->
+            <section id="category-4" class="category-section">
+                <h2 class="text-3xl font-bold border-b-2 border-yellow-500 pb-3 mb-8 text-yellow-300">
+                    IV. 경영 및 사회적 책임 용어
+                </h2>
+                <dl class="space-y-8">
+                    <!-- ... category 4의 term-pair ... -->
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-yellow-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">경영의 목표</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">지속적 이익 창출의 극대화, 공동체와 더불어 살아가는 건강한 사회 실현에 일조, 구성원의 삶의 질 향상에 기여하는 것.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-yellow-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">CSR (기업의 사회적 책임)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">기업 수익의 일부를 사회에 환원하는 단순한 이익의 사회적 환원. 자선활동과 같은 선행 형태로 진행됩니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-yellow-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">CSV (공유가치 창출)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">사회의 근원적 문제점 해결을 통한 기업 이익의 동반 성장을 꾀하는 경영철학. 사회적 가치, 경제적 가치, 문화적 가치의 합리적 배분을 통한 균형 성장을 말합니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-yellow-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">ESG (환경, 사회, 거버넌스)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">환경적 요인, 사회적 책임(사회적 가치), (거버넌스의) 투명 경영을 의미하며, CSR과 CSV의 확장 개념으로 이제 선택이 아닌 필수로 자리매김 중입니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-yellow-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">ESS (중역지원시스템)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">최고 경영자의 판단, 평가, 통찰력이 절대적으로 요구되는 비일상적인 의사결정을 지원하는 시스템.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-yellow-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">CRM (Customer Relationship Management)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">고객과의 관계를 구축하고 유지하며, 이를 통해 비즈니스 성과를 향상시키는 전략적 접근법.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-yellow-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">VMI (Vendor Managed Inventory)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">유통업체가 제조업체에 재고 정보를 제공하면, 제조업체가 이를 토대로 수요를 예측하고 납품량을 결정하는 공급자 주도형 재고관리 방식.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-yellow-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">Quick Response (QR)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">신속대응시스템. 제조에서 소비자에게 전달되기까지의 제조 과정을 단축하여 소비자의 요구를 충족시키는 SCM 전략.</dd>
+                    </div>
+                </dl>
+            </section>
+
+            <!-- 카테고리 5: 소비자 트렌드 -->
+            <section id="category-5" class="category-section">
+                <h2 class="text-3xl font-bold border-b-2 border-red-500 pb-3 mb-8 text-red-300">
+                    V. 소비자 트렌드 용어
+                </h2>
+                <dl class="space-y-8">
+                    <!-- ... category 5의 term-pair ... -->
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-red-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">욜로 (YOLO)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">You Only Live Once의 줄임말로, 현재 이 순간을 사랑하려는 긍정적인 태도. (2017년 키워드).</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-red-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">소확행</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">작지만 확실한 행복을 추구하는 경향. (2018년 키워드).</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-red-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">뉴트로 (New-tro)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">다시 옛날 것이 뜨는 새로운 복고. 옛날 감성에 현대적 아이템의 가치를 부여하는 현상. (2019년 키워드).</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-red-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">멀티 페르소나 (Multi Persona)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">복수의 가면을 뜻하는 양면적 소비 행태. 다양한 취향과 정체성을 추구합니다. (2020년 키워드).</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-red-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">온택트 (Ontact)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">온라인(Online)과 언택트(Untact)의 합성어. 팬데믹 시대 온라인을 통한 비대면 시장의 활성화를 뜻합니다. (2021년 키워드).</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-red-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">나노사회 (Nano Society)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">극소 단위로 파편화된 사회 변화 양상. 지속적인 개인화와 팬데믹으로 인한 사회적 거리두기가 가속화된 현상. (2022년 키워드).</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-red-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">알파세대 (Alpha Generation)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">2010년 이후 출생한 순수 디지털 네이티브 세대. 전세계 인구의 25%를 차지하는 역사상 최대 규모로, 소비 지형을 바꿀 주역으로 주목받습니다. (2023년 키워드).</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-red-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">체리슈머 (Cherry-sumers)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">한정된 자원을 극대화하기 위해 최대한 알뜰하게 소비하는 전략적 소비자.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-red-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">캄테크 (Calm-tech)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">AI, IoT 등 사람들이 인지하지 못한 상태에서 서비스를 제공하는 보이지 않는 배려 기술을 지칭합니다.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-red-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">벼리</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">어떤 일의 근본이나 뼈대가 되는 줄거리를 뜻하는 용어.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-red-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">득템력 (Gotcha Power)</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">경제적 지불 능력만으로 얻을 수 없는 희소한 상품을 얻을 수 있는 소비자들의 능력.</dd>
+                    </div>
+                    <div class="term-pair p-6 bg-gray-800/60 rounded-xl shadow-lg transition-all duration-300 hover:shadow-red-500/20 hover:bg-gray-800">
+                        <dt class="text-xl font-semibold text-white">내러티브 자본</dt>
+                        <dd class="mt-2 text-gray-300 leading-relaxed">서사(이야기)를 갖추는 순간 보잘것없는 것도 가치 창출로 대중의 강력한 주목을 받는 현상.</dd>
+                    </div>
+                </dl>
+            </section>
+
+        </div>
+
+        <!-- 검색 결과 없음 메시지 -->
+        <div id="no-results" class="text-center text-gray-500 text-xl mt-16 py-10" style="display: none;">
+            <svg class="mx-auto h-16 w-16 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p class="mt-4 text-2xl font-semibold">검색 결과가 없습니다.</p>
+            <p class="mt-2 text-gray-400">다른 키워드로 검색해 보세요.</p>
+        </div>
+
+    </div>
+
+    <!-- JavaScript 로직 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchBox = document.getElementById('search-box');
+            const categories = document.querySelectorAll('.category-section');
+            const noResults = document.getElementById('no-results');
+            const categoryButtonContainer = document.getElementById('category-buttons');
+            const categoryButtons = categoryButtonContainer.querySelectorAll('button');
+
+            // --- 스타일 클래스 정의 ---
+            const activeBtnClasses = ['bg-blue-500', 'text-white'];
+            const defaultBtnClasses = ['bg-gray-700', 'text-gray-300', 'hover:bg-gray-600'];
+
+            let currentActiveCategory = '#category-1'; // 기본 활성 카테고리 ID
+
+            // --- 특정 카테고리를 보여주는 함수 ---
+            function showCategory(categoryId) {
+                categories.forEach(category => {
+                    if (category.id === categoryId.substring(1)) {
+                        category.style.display = 'block';
+                        // 검색 후 돌아올 때를 대비해 모든 용어 표시
+                        category.querySelectorAll('.term-pair').forEach(pair => {
+                            pair.style.display = 'block';
+                        });
+                    } else {
+                        category.style.display = 'none';
+                    }
+                });
+
+                // --- 버튼 스타일 업데이트 ---
+                categoryButtons.forEach(button => {
+                    if (button.dataset.target === categoryId) {
+                        button.classList.remove(...defaultBtnClasses);
+                        button.classList.add(...activeBtnClasses);
+                    } else {
+                        button.classList.remove(...activeBtnClasses);
+                        button.classList.add(...defaultBtnClasses);
+                    }
+                });
+
+                currentActiveCategory = categoryId; // 현재 활성 카테고리 저장
+                noResults.style.display = 'none'; // 검색 결과 없음 메시지 숨기기
+            }
+
+            // --- 페이지 초기화: 첫 번째 카테고리 표시 ---
+            showCategory(currentActiveCategory);
+
+            // --- 카테고리 버튼 클릭 이벤트 ---
+            categoryButtonContainer.addEventListener('click', (e) => {
+                // 클릭된 요소가 버튼인지 확인
+                if (e.target.tagName === 'BUTTON' && e.target.dataset.target) {
+                    const targetId = e.target.dataset.target;
+                    showCategory(targetId);
+                    searchBox.value = ''; // 카테고리 변경 시 검색창 비우기
+                }
+            });
+
+            // --- 검색창 입력 이벤트 ---
+            searchBox.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase().trim();
+
+                if (searchTerm.length > 0) {
+                    // --- 검색 모드 ---
+                    let totalVisibleCount = 0;
+
+                    // 모든 카테고리 버튼 비활성화
+                    categoryButtons.forEach(button => {
+                        button.classList.remove(...activeBtnClasses);
+                        button.classList.add(...defaultBtnClasses);
+                    });
+
+                    categories.forEach(category => {
+                        let categoryVisibleCount = 0;
+                        const pairsInSection = category.querySelectorAll('.term-pair');
+
+                        pairsInSection.forEach(pair => {
+                            const term = pair.querySelector('dt').textContent.toLowerCase();
+                            const description = pair.querySelector('dd').textContent.toLowerCase();
+
+                            // 용어 또는 설명에 검색어가 포함되어 있는지 확인
+                            if (term.includes(searchTerm) || description.includes(searchTerm)) {
+                                pair.style.display = 'block'; // 보이기
+                                categoryVisibleCount++;
+                                totalVisibleCount++;
+                            } else {
+                                pair.style.display = 'none'; // 숨기기
+                            }
+                        });
+
+                        // 해당 카테고리에 보이는 항목이 하나라도 있으면 카테고리 제목을 보임
+                        if (categoryVisibleCount > 0) {
+                            category.style.display = 'block';
+                        } else {
+                            category.style.display = 'none';
+                        }
+                    });
+
+                    // 전체 검색 결과가 없을 때 "결과 없음" 메시지 표시
+                    if (totalVisibleCount === 0) {
+                        noResults.style.display = 'block';
+                    } else {
+                        noResults.style.display = 'none';
+                    }
+                } else {
+                    // --- 카테고리 모드 (검색창 비었을 때) ---
+                    // 마지막으로 활성화됐던 카테고리로 복귀
+                    showCategory(currentActiveCategory);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
