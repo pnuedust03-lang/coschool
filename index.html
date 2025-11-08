@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>교과연계형 금융일반 포트폴리오</title>
+    <!-- Tailwind CSS CDN 로드 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter 폰트 설정 (Tailwind 기본 폰트) -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ededed; /* 옅은 회색 배경색 (더 명확한 회색) */
+        }
+    </style>
+</head>
+<body class="min-h-screen antialiased">
+
+    <script>
+        const SUMMARY_URL = 'https://script.google.com/macros/s/AKfycbzyVv8Vn41GAG-wJmLPoGCTexvplBYQlzp3rgktjT6ixO7d33MeFayB5KJ06Sua9afZyQ/exec';
+        const PDF_URL = '수업자료.pdf'; // 사용자가 업로드할 PDF 파일 경로
+
+        /** 콘텐츠 보기 뷰를 표시하고 iframe에 URL을 로드합니다. */
+        function showContent(url, title) {
+            const landingView = document.getElementById('landing-view');
+            const contentView = document.getElementById('content-view');
+            const contentIframe = document.getElementById('content-iframe');
+            const contentTitle = document.getElementById('content-view-title');
+
+            landingView.classList.add('hidden');
+            contentView.classList.remove('hidden');
+            contentTitle.textContent = title;
+
+            // 로딩 표시
+            const loadingIndicator = document.getElementById('content-loading');
+            loadingIndicator.classList.remove('hidden');
+
+            // iframe 소스 로드 (로드가 완료될 때까지 로딩 표시)
+            contentIframe.src = url;
+            contentIframe.onload = () => {
+                loadingIndicator.classList.add('hidden');
+            };
+            // 로딩 오류 처리 (선택 사항, 내부 파일 로드 시 유용)
+            contentIframe.onerror = () => {
+                 loadingIndicator.classList.add('hidden');
+                 contentTitle.textContent += " (로딩 실패 - 파일이 없거나 URL이 올바르지 않음)";
+            }
+        }
+
+        /** 랜딩 페이지 뷰를 표시하고 콘텐츠 뷰를 숨깁니다. */
+        function showLanding() {
+            document.getElementById('content-view').classList.add('hidden');
+            document.getElementById('landing-view').classList.remove('hidden');
+            // iframe src를 비워 백그라운드 로딩을 중지
+            document.getElementById('content-iframe').src = '';
+        }
+    </script>
+
+    <!-- 1. 랜딩 페이지 뷰 (기본 화면) -->
+    <div id="landing-view" class="container mx-auto p-4 sm:p-8">
+
+        <!-- 헤더 및 포트폴리오 제목 섹션 -->
+        <header class="bg-white shadow-xl rounded-2xl p-6 md:p-12 mb-10 text-center border-t-4 border-indigo-600">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-2">
+                교과연계형 금융일반 포트폴리오
+            </h1>
+            <p class="text-xl md:text-2xl text-indigo-600 font-semibold mb-4">
+                부산대학교 수강 내용 정리
+            </p>
+            <div class="text-gray-500 text-lg">
+                <span class="font-medium">제작:</span> 동아고등학교 1학년 임정욱
+            </div>
+        </header>
+
+        <!-- 핵심 항목 카드 섹션 -->
+        <main class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+            
+            <!-- 1. 금융용어사전 카드 (순서 변경됨) -->
+            <section class="bg-white shadow-lg rounded-xl p-8 transition duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.01] flex flex-col">
+                <div class="flex items-center mb-4">
+                    <!-- 아이콘: 사전 (책 모양 SVG) -->
+                    <svg class="w-8 h-8 text-indigo-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.466 9.387 5 8 5a6 6 0 000 12c1.387 0 2.832-.466 4-1.253M12 6.253c1.168.787 2.613 1.253 4 1.253 1.387 0 2.832-.466 4-1.253m0 0a6 6 0 010 12c-1.387 0-2.832-.466-4-1.253m0 0v-1" />
+                    </svg>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800">
+                        금융용어사전
+                    </h2>
+                </div>
+                <p class="text-gray-600 mb-6 flex-grow">
+                    수강한 과목에서 습득한 주요 금융 용어 및 개념을 정리한 사전입니다. 경제 뉴스나 금융 기사를 이해하는 데 필수적인 핵심 용어들을 쉽게 찾아볼 수 있도록 구성합니다.
+                </p>
+                <!-- dict.html은 새 창에서 열도록 유지 (내부 파일) -->
+                <button onclick="window.open('dict.html', '_blank')"
+                        class="mt-auto bg-indigo-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-indigo-700 transition duration-150 ease-in-out shadow-md hover:shadow-xl">
+                    사전 보러가기
+                </button>
+            </section>
+
+            <!-- 2. 교과핵심정리 카드 (순서 변경됨) -->
+            <section class="bg-white shadow-lg rounded-xl p-8 transition duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.01] flex flex-col">
+                <div class="flex items-center mb-4">
+                    <!-- 아이콘: 요약 (노트 모양 SVG) -->
+                    <svg class="w-8 h-8 text-indigo-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800">
+                        교과핵심정리
+                    </h2>
+                </div>
+                <p class="text-gray-600 mb-6 flex-grow">
+                    부산대학교 '금융일반' 과목의 핵심 이론과 학습 내용을 정리한 노트입니다. 주요 주제별로 학습 목표, 요점 정리, 심화 학습 내용 등을 포함하여 구성합니다.
+                </p>
+                <!-- 핵심 노트는 showContent 함수를 통해 현재 페이지에서 로드 -->
+                <button onclick="showContent(SUMMARY_URL, '교과 핵심 정리 (외부 콘텐츠)')"
+                        class="mt-auto bg-indigo-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-indigo-700 transition duration-150 ease-in-out shadow-md hover:shadow-xl">
+                    핵심 노트 보기
+                </button>
+            </section>
+            
+            <!-- 3. [신규] 교과 내용 요약 보기 카드 (전체 너비: col-span-2) -->
+            <section class="lg:col-span-2 bg-white shadow-lg rounded-xl p-8 transition duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.005] flex flex-col border-l-4 border-emerald-500">
+                <div class="flex items-center mb-4">
+                    <!-- 아이콘: PDF (문서 모양 SVG) -->
+                    <svg class="w-8 h-8 text-emerald-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2-10h4a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h4M9 2v4a2 2 0 002 2h4a2 2 0 002-2V2"></path>
+                    </svg>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800">
+                        교과 내용 요약 보기
+                    </h2>
+                </div>
+                <p class="text-gray-600 mb-6 flex-grow">
+                    부산대학교 '금융일반' 수업 자료(PDF)를 여기에 직접 로드하여 내용을 확인할 수 있습니다. 파일을 업로드하면 여기에 표시됩니다.
+                </p>
+                <!-- showContent 함수 호출: 파일 이름과 제목 전달 -->
+                <button onclick="showContent(PDF_URL, '수업자료.pdf 내용')"
+                        class="mt-auto bg-emerald-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-emerald-700 transition duration-150 ease-in-out shadow-md hover:shadow-xl">
+                    수업 자료 보기
+                </button>
+            </section>
+        </main>
+
+        <!-- 수업 소감 및 성찰 섹션 -->
+        <section class="mt-10 bg-white shadow-lg rounded-xl p-8 border-l-4 border-rose-500">
+            <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                <svg class="w-6 h-6 text-rose-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                수업 성찰 및 소감
+            </h3>
+            <p class="text-gray-700 leading-relaxed italic">
+                "지금까지 금융일반이라는 강좌를 통해 많은 것들을 깨달았습니다. 금융부터 AI까지 현 세대를 살아가는데 있어서 꼭 필요하고 중요한 내용들로 설명해주셔서 지식이 조금 더 풍부해진 느낌이고, 이 배운 내용을 바탕으로 실생활에서도 사용해보고 싶습니다. 저의 진로와 연관된 내용을 배우며 진로에 대한 흥미가 더  많이 생기기도 하였습니다."
+            </p>
+        </section>
+
+        <!-- 푸터/정보 섹션 -->
+        <footer class="mt-12 text-center text-gray-500 text-sm">
+            <p>본 포트폴리오는 부산대학교-동아고등학교 교과연계 활동의 결과물입니다.</p>
+        </footer>
+    </div>
+    
+    <!-- 2. 콘텐츠 뷰 (iframe 로드 섹션) -->
+    <div id="content-view" class="hidden min-h-screen p-4 sm:p-8">
+        <div class="bg-white shadow-xl rounded-2xl p-6 md:p-8">
+            <div class="flex justify-between items-center mb-6 border-b pb-4">
+                <h2 id="content-view-title" class="text-3xl font-bold text-gray-900">콘텐츠 제목</h2>
+                <button onclick="showLanding()"
+                        class="bg-indigo-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-indigo-700 transition duration-150 shadow-md flex items-center">
+                    <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    돌아가기
+                </button>
+            </div>
+            
+            <!-- 로딩 인디케이터 -->
+            <div id="content-loading" class="text-center py-20">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500 mx-auto mb-4"></div>
+                <p class="text-gray-600">콘텐츠를 로드하는 중입니다. 잠시만 기다려주세요...</p>
+            </div>
+
+            <!-- 콘텐츠를 로드할 iframe -->
+            <iframe id="content-iframe" src="" frameborder="0" class="w-full h-screen min-h-[80vh] rounded-lg border border-gray-300" allowfullscreen></iframe>
+            
+            <div class="mt-8 text-center">
+                <button onclick="showLanding()"
+                        class="bg-gray-400 text-white py-2 px-6 rounded-lg font-semibold hover:bg-gray-600 transition duration-150 shadow-md">
+                    메인 페이지로 돌아가기
+                </button>
+            </div>
+            
+            <p class="text-xs text-red-500 mt-4 text-center">
+                * 로컬 파일(`수업자료.pdf`)이나 외부 콘텐츠의 보안 설정으로 인해 내용이 로드되지 않을 수 있습니다.
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>
