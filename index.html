@@ -18,10 +18,12 @@
 <body class="min-h-screen antialiased">
 
     <script>
+        // URL 상수 정의
         const SUMMARY_URL = 'https://script.google.com/macros/s/AKfycbzyVv8Vn41GAG-wJmLPoGCTexvplBYQlzp3rgktjT6ixO7d33MeFayB5KJ06Sua9afZyQ/exec';
         const PDF_URL = '수업자료.pdf'; // 사용자가 업로드할 PDF 파일 경로
+        const STOCK_URL = 'https://gemini.google.com/share/4246dc4fb6d8'; // 주식 비교 URL
 
-        /** 콘텐츠 보기 뷰를 표시하고 iframe에 URL을 로드합니다. */
+        /** 콘텐츠 보기 뷰를 표시하고 iframe에 URL을 로드합니다. (내부 로드용 함수) */
         function showContent(url, title) {
             const landingView = document.getElementById('landing-view');
             const contentView = document.getElementById('content-view');
@@ -55,6 +57,11 @@
             // iframe src를 비워 백그라운드 로딩을 중지
             document.getElementById('content-iframe').src = '';
         }
+        
+        /** 새 창에서 URL을 엽니다. (외부/파일 로드용 함수) */
+        function openInNewWindow(url) {
+            window.open(url, '_blank');
+        }
     </script>
 
     <!-- 1. 랜딩 페이지 뷰 (기본 화면) -->
@@ -76,7 +83,7 @@
         <!-- 핵심 항목 카드 섹션 -->
         <main class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
             
-            <!-- 1. 금융용어사전 카드 (순서 변경됨) -->
+            <!-- 1. 금융용어사전 카드 -->
             <section class="bg-white shadow-lg rounded-xl p-8 transition duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.01] flex flex-col">
                 <div class="flex items-center mb-4">
                     <!-- 아이콘: 사전 (책 모양 SVG) -->
@@ -90,14 +97,14 @@
                 <p class="text-gray-600 mb-6 flex-grow">
                     수강한 과목에서 습득한 주요 금융 용어 및 개념을 정리한 사전입니다. 경제 뉴스나 금융 기사를 이해하는 데 필수적인 핵심 용어들을 쉽게 찾아볼 수 있도록 구성합니다.
                 </p>
-                <!-- dict.html은 새 창에서 열도록 유지 (내부 파일) -->
-                <button onclick="window.open('dict.html', '_blank')"
+                <!-- dict.html은 새 창에서 열도록 유지 (openInNewWindow 사용) -->
+                <button onclick="openInNewWindow('dict.html')"
                         class="mt-auto bg-indigo-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-indigo-700 transition duration-150 ease-in-out shadow-md hover:shadow-xl">
                     사전 보러가기
                 </button>
             </section>
 
-            <!-- 2. 교과핵심정리 카드 (순서 변경됨) -->
+            <!-- 2. 교과핵심정리 카드 -->
             <section class="bg-white shadow-lg rounded-xl p-8 transition duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.01] flex flex-col">
                 <div class="flex items-center mb-4">
                     <!-- 아이콘: 요약 (노트 모양 SVG) -->
@@ -111,14 +118,14 @@
                 <p class="text-gray-600 mb-6 flex-grow">
                     부산대학교 '금융일반' 과목의 핵심 이론과 학습 내용을 정리한 노트입니다. 주요 주제별로 학습 목표, 요점 정리, 심화 학습 내용 등을 포함하여 구성합니다.
                 </p>
-                <!-- 핵심 노트는 showContent 함수를 통해 현재 페이지에서 로드 -->
+                <!-- 핵심 노트는 showContent 함수를 통해 현재 페이지에서 내부 로드 -->
                 <button onclick="showContent(SUMMARY_URL, '교과 핵심 정리 (외부 콘텐츠)')"
                         class="mt-auto bg-indigo-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-indigo-700 transition duration-150 ease-in-out shadow-md hover:shadow-xl">
                     핵심 노트 보기
                 </button>
             </section>
             
-            <!-- 3. [신규] 교과 내용 요약 보기 카드 (전체 너비: col-span-2) -->
+            <!-- 3. 교과 내용 요약 보기 카드 (전체 너비: col-span-2) -->
             <section class="lg:col-span-2 bg-white shadow-lg rounded-xl p-8 transition duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.005] flex flex-col border-l-4 border-emerald-500">
                 <div class="flex items-center mb-4">
                     <!-- 아이콘: PDF (문서 모양 SVG) -->
@@ -136,6 +143,27 @@
                 <button onclick="showContent(PDF_URL, '수업자료.pdf 내용')"
                         class="mt-auto bg-emerald-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-emerald-700 transition duration-150 ease-in-out shadow-md hover:shadow-xl">
                     수업 자료 보기
+                </button>
+            </section>
+
+            <!-- 4. 주식 비교 카드 (전체 너비: col-span-2) -->
+            <section class="lg:col-span-2 bg-white shadow-lg rounded-xl p-8 transition duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.005] flex flex-col border-l-4 border-cyan-500">
+                <div class="flex items-center mb-4">
+                    <!-- 아이콘: 차트 (주식 차트 모양 SVG) -->
+                    <svg class="w-8 h-8 text-cyan-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                    </svg>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800">
+                        주식 비교 (카카오와 네이버)
+                    </h2>
+                </div>
+                <p class="text-gray-600 mb-6 flex-grow">
+                    Gemini를 통해 생성된 카카오와 네이버의 주식 정보를 비교 분석한 자료입니다. 두 기업의 현재 가치와 전망을 확인해 보세요.
+                </p>
+                <!-- openInNewWindow 함수 호출: 새 창에서 열도록 변경 -->
+                <button onclick="openInNewWindow(STOCK_URL)"
+                        class="mt-auto bg-cyan-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-cyan-700 transition duration-150 ease-in-out shadow-md hover:shadow-xl">
+                    비교 자료 보기
                 </button>
             </section>
         </main>
